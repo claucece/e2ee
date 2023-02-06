@@ -5,14 +5,14 @@
 sec                                                            M. Knodel
 Internet-Draft                                                       CDT
 Intended status: Informational                                   S. Celi
-Expires: 11 March 2023                                             Brave
+Expires: 10 August 2023                                            Brave
                                                                 F. Baker
                                                                         
                                                               O. Kolkman
                                                                     ISOC
                                                                G. Grover
                                          Centre for Internet and Society
-                                                        7 September 2022
+                                                         6 February 2023
 
 
                   Definition of End-to-end Encryption
@@ -52,11 +52,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 March 2023.
+   This Internet-Draft will expire on 10 August 2023.
 
 Copyright Notice
 
-   Copyright (c) 2022 IETF Trust and the persons identified as the
+   Copyright (c) 2023 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -106,7 +106,7 @@ Table of Contents
    of necessary constituent parts but considered as a system.  The
    second looks at end-to-end encrypted implementations from a design
    perspective, both its fundamental features and proposed improvements
-   on those features.  Lastly this document considers the expectations
+   on those features.  Lastly, this document considers the expectations
    of the user of end-to-end encryption.
 
    These dimensions taken as a whole comprise a generally comprehensible
@@ -115,9 +115,10 @@ Table of Contents
    and between any number of end points.  It it worth noting that while
    the word "encryption" often refers to confidentiality (security)
    properties, we argue that end-to-end encryption should provide both
-   security and privacy properties.  We aim to provide a definition of
-   end-to-end encryption that states which specific security and privacy
-   properties it should provide.
+   security and privacy properties (such as authentication and
+   integrity).  We aim to provide a definition of end-to-end encryption
+   that states which specific security and privacy properties it should
+   provide.
 
 2.  Formal definition of end-to-end encryption
 
@@ -126,7 +127,7 @@ Table of Contents
    concepts: the end-to-end principle according to the IETF; and
    encryption, an application of cryptographic mechanisms and the
    primary means employed by the IETF to secure and maintain privacy of
-   internet protocols.  Where end-to-end encryption is comprised of thes
+   internet protocols.  Where end-to-end encryption is comprised of its
    necessary constituent parts, a systems approach also defines their
    interplay.  In the field of cryptography it is also possible to
    achieve a concise definition of end-to-end encrypted security.
@@ -276,15 +277,15 @@ Table of Contents
    authenticate and provide integrity of the content of the data
    exchanged between the endpoints, e.g. sender(s) and receiver(s).  The
    more common end-to-end technique used nowadays to achieve this makes
-   use of the double-ratchet algorithm with an authenticated encryption
-   scheme and of a Authenticated Key Exchange (AKE).  The usage of this
-   algorithms (or variants of them) is present in many modern messenger
-   applications such as those considered in the IETF Messaging Layer
-   Security working group, whose charter is to create a document that
-   satisfies the need for several internet applications for group key
-   establishment and message protection protocols [mls].  OpenPGP,
-   mostly used for email, uses a different technique to achieve security
-   and privacy.  It is also chartered in the IETF to create a
+   use of the double-ratchet algorithm (which uses a authenticated
+   encryption scheme) and of a Authenticated Key Exchange (AKE).  The
+   usage of this algorithms (or variants of them) is present in many
+   modern messenger applications such as those considered in the IETF
+   Messaging Layer Security working group, whose charter is to create a
+   document that satisfies the need for several internet applications
+   for group key establishment and message protection protocols [mls].
+   OpenPGP, mostly used for email, uses a different technique to achieve
+   security and privacy.  It is also chartered in the IETF to create a
    specification that covers object encryption, object signing, and
    identity certification [openpgp].  Both protocols rely on the use of
    asymmetric and symmetric encryption, and exchange long-term identity
@@ -353,8 +354,8 @@ Table of Contents
 
 3.1.1.  Necessary features
 
-   Authenticity  A system provides message authenticity if the recipient
-      and sender attest to each other's identities in relation to the
+   Authentication  A system provides authentication if the recipient and
+      sender attest to each other's identities in relation to the
       contents of their communications.
 
    Confidentiality  A system provides message confidentiality if only
@@ -364,12 +365,17 @@ Table of Contents
       recipients can decrypt them.
 
    Integrity  A system provides message integrity when it guarantees
-      that messages that have been modified in transit.  If they have
+      that messages have not been modified in transit.  If they have
       been modified, it must be detected in a reliable way such that a
       recipient is assured that a message cannot be undetectably
       modified in any way.
 
 3.1.2.  Optional/desirable features
+
+   There is a set of optional/desirable features that a end-to-end
+   system can provide.  These properties can be related to the network,
+   to the user interface or specialized variants of the previous
+   features.
 
    Availability  A system provides high availability if the user is able
       to access the contents of the message (decrypt them) when they so
@@ -388,29 +394,29 @@ Table of Contents
       cryptographically prove to others that a particular participant of
       a communication authored an specific message.  As demonstrated by
       widely implemented protocols, this optional property must exist in
-      conjunction with the necessary property of message authenticity,
-      i.e. participants in a communication must be assured that they are
+      conjunction with the necessary property of authentication, i.e.
+      participants in a communication must be assured that they are
       communicating with the intended parties but this assurance cannot
       be transmitted to any other parties.
 
    Forward secrecy  Forward secrecy is a security property that prevents
       attackers from decrypting encrypted data they have previously
       captured over a communication channel before the time of
-      compromise, even if they have compromised one of the endpoints.
-      Forward secrecy is usually achieved by deriving new encryption/
-      decryption keys, and old keys no longer required to encrypt or
-      decrypt any new messages are immediately destroyed.
+      compromise, even if they have compromised only one of the
+      endpoints.  Forward secrecy is usually achieved by deriving new
+      encryption/decryption keys, and immediately destroying old keys no
+      longer required to encrypt or decrypt any new messages.
 
    Post-compromise security  Post-compromise security is a security
       property that seeks to guarantee future confidentiality and
-      integrity even on the face of a passive end-point compromise (and
+      integrity in the face of a passive end-point compromise (and
       consequently that communication sent post-compromise is protected
       with the same security properties that existed before the
       compromise).  It is usually achieved by adding new ephemeral key
       exchanges (new randomness) to the derivation of encryption/
       decryption keys every 'x' amount of time or after 'n' messages
       sent.  Note that post-compromise security is not met in the face
-      of active attackers.
+      of active attackers that compromise an end-point.
 
    Metadata obfuscation  Digital communication inevitably generates data
       other than the content of the communication itself, such as IP
@@ -424,7 +430,7 @@ Table of Contents
       client-side security that is unsustainable.  Features like "delete
       for me" or "delete for everyone" helps with individual messages.
       What is better is the automatic deletion of whole conversations
-      after an agreed upon timeframe by all parties, eg disappearing
+      after an agreed upon timeframe by all parties, e.g. disappearing
       messages.  In any case, whenever a user has deleted content for
       all, the provider must ensure complete removal of the content.
 
@@ -482,10 +488,11 @@ Table of Contents
 
    *  The whole communication should remain secure if only one message
       is compromised.  However, for encrypted communication, in some
-      schemes, you must currently choose between forward secrecy or the
-      ability to fully communicate asynchronously.  This presents a
-      problem for application design that uses end-to-end encryption for
-      asynchronous messaging over email, RCS, etc.
+      schemes, you must currently choose between forward secrecy and
+      post-compromise security or the ability to fully communicate
+      asynchronously.  This presents a problem for application design
+      that uses end-to-end encryption for asynchronous messaging over
+      email, RCS, etc.
 
    *  Users of end-to-end encrypted systems should be able to
       communicate with any medium of their choice, from text to large
@@ -532,7 +539,7 @@ Table of Contents
 
    Trustworthy  A system is completely trustworthy if and only if it is
       completely resilient, reliable, accountable, and secure in a way
-      that consistently meets users' expectations.  The opposite of
+      that consistently meets users’ expectations.  The opposite of
       trustworthy is untrustworthy.
 
    This definition is complete in its positive and negative aspects:
@@ -553,7 +560,7 @@ Table of Contents
    No matter the specifics, any methods used to access to the content of
    the messages by a third party would violate a user's expectations of
    end-to-end encrypted messaging.  "[T]hese access methods scan message
-   contents on the user's [device]", which are then "scanned for matches
+   contents on the user’s [device]", which are then "scanned for matches
    against a database of prohibited content before, and sometimes after,
    the message is sent to the recipient" [GEC-EU].  Third party access
    also covers cases without scanning -- namely, it should not be
