@@ -417,7 +417,10 @@ Table of Contents
       exchanges (new randomness) to the derivation of encryption/
       decryption keys every 'x' amount of time or after 'n' messages
       sent.  Note that post-compromise security is not met in the face
-      of active attackers that compromise an end-point.
+      of active attackers that compromise an end-point.  This property
+      can add a level of complexity to a protocol as deriving new key
+      material can be expensive, and, therefore, it has to be carefully
+      evaluated as part of a system's design.
 
    Metadata obfuscation  Digital communication inevitably generates data
       other than the content of the communication itself, such as IP
