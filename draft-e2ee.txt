@@ -277,15 +277,16 @@ Table of Contents
    authenticate and provide integrity of the content of the data
    exchanged between the endpoints, e.g. sender(s) and receiver(s).  The
    more common end-to-end technique used nowadays to achieve this makes
-   use of the double-ratchet algorithm (which uses a authenticated
-   encryption scheme) and of a Authenticated Key Exchange (AKE).  The
-   usage of this algorithms (or variants of them) is present in many
-   modern messenger applications such as those considered in the IETF
-   Messaging Layer Security working group, whose charter is to create a
-   document that satisfies the need for several internet applications
-   for group key establishment and message protection protocols [mls].
-   OpenPGP, mostly used for email, uses a different technique to achieve
-   security and privacy.  It is also chartered in the IETF to create a
+   use of the double-ratchet algorithm (which uses an authenticated
+   encryption scheme combined with regular derivation of new keys) and
+   of a Authenticated Key Exchange (AKE).  The usage of this algorithms
+   (or variants of them) is present in many modern messenger
+   applications such as those considered in the IETF Messaging Layer
+   Security working group, whose charter is to create a document that
+   satisfies the need for several internet applications for group key
+   establishment and message protection protocols [mls].  OpenPGP,
+   mostly used for email, uses a different technique to achieve security
+   and privacy.  It is also chartered in the IETF to create a
    specification that covers object encryption, object signing, and
    identity certification [openpgp].  Both protocols rely on the use of
    asymmetric and symmetric encryption, and exchange long-term identity
